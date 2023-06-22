@@ -1,9 +1,7 @@
 package com.example.Task.Management.System.Module;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -11,19 +9,18 @@ import java.util.Date;
 @Entity
     @NoArgsConstructor
     @AllArgsConstructor
-    @Data
+    @Getter
+    @Setter
     public class Task {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name="Id")
-        private Long id;
+        private int id;
 
         private String title;
 
         private String type;
-
-        private Date dueDate;
 
         private String description;
     }
