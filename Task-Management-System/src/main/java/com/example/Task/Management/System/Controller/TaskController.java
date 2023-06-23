@@ -41,11 +41,12 @@ public class TaskController {
     @PutMapping("/updateTask/{id}")
     public ResponseEntity<?> updateTask(@RequestBody Task task,@PathVariable int id) throws Throwable {
        if(taskService.existById(id)){  //Conditions to check if the desired task present in the db
-            task=taskService.getTaskById(id).orElseThrow(() -> new EntityNotFoundException("Requested Task not found")); //if it present then store in task else throw the exception
-           task.setTitle(task.getTitle()); //keepon update the data and save it to repository
-           task.setType(task.getType());
-           task.setDescription(task.getDescription());
-           taskService.addTask(task);
+           Task task1=taskService.getTaskById(id).orElseThrow(() -> new EntityNotFoundException("Requested Task not found")); //if it present then store in task else throw the exception
+           task1.setId(task.getId());
+           task1.setTitle(task.getTitle()); //keepon update the data and save it to repository
+           task1.setType(task.getType());
+           task1.setDescription(task.getDescription());
+           taskService.addTask(task1);
            return ResponseEntity.ok().body(task);
        }
        else{
