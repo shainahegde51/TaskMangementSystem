@@ -3,7 +3,8 @@ package com.example.Task.Management.System.Module;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+
+
 
 
 @Entity
@@ -23,6 +24,8 @@ import java.util.Date;
         private String type;
 
         private String description;
+
+
     }
 
 

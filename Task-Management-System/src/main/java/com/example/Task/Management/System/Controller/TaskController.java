@@ -16,26 +16,33 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    //Adding task
+    //This will fetch all the task which is present in db
     @GetMapping("/getTask")
     public List<Task> getTasks(){
         return taskService.getTasks();
     }
+
+
+    //This will fetch the task which has provided id
     @GetMapping("/getById/{id}")
     public Task getById(@PathVariable int id){
         return taskService.getTaskById(id).orElseThrow(() -> new EntityNotFoundException("Requested Task not found"));
     }
 
+
+    //this will add new task to db
     @PostMapping("/addTask")
     public Task addTask(@RequestBody Task task) {
         return taskService.addTask(task);
     }
 
+
+    //This will update the existing task
     @PutMapping("/updateTask/{id}")
     public ResponseEntity<?> updateTask(@RequestBody Task task,@PathVariable int id) throws Throwable {
-       if(taskService.existById(id)){
-            task=taskService.getTaskById(id).orElseThrow(() -> new EntityNotFoundException("Requested Task not found"));
-           task.setTitle(task.getTitle());
+       if(taskService.existById(id)){  //Conditions to check if the desired task present in the db
+            task=taskService.getTaskById(id).orElseThrow(() -> new EntityNotFoundException("Requested Task not found")); //if it present then store in task else throw the exception
+           task.setTitle(task.getTitle()); //keepon update the data and save it to repository
            task.setType(task.getType());
            task.setDescription(task.getDescription());
            taskService.addTask(task);
@@ -50,9 +57,9 @@ public class TaskController {
 
     @DeleteMapping("/deleteTask/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable int id) {
-        if(taskService.existById(id)) {
-            taskService.delete(id);
-            HashMap<String, String>message= new HashMap<>();
+        if(taskService.existById(id)) {   //checks if task with desired id present or not
+            taskService.delete(id);   //deletes it if it is present
+            HashMap<String, String>message= new HashMap<>(); //this section is for displaying customised message
             message.put("message", id + " task removed");
             return ResponseEntity.status(HttpStatus.OK).body(message);
         }else {
